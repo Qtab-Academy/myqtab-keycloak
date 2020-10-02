@@ -17,7 +17,7 @@ jobs:
       run: echo $GITHUB_SHA > $GITHUB_WORKSPACE/_meta
 
     - name: Build container image
-      run: docker build -t registry.digitalocean.com/myqtab/myqtab-keycloak:$(echo $GITHUB_SHA | head -c7) .
+      run: docker build -t registry.digitalocean.com/myqtab/myqtab-keycloak .
 
     - name: Install doctl
       uses: digitalocean/action-doctl@v2
@@ -29,9 +29,6 @@ jobs:
 
     - name: Push image to DigitalOcean Container Registry
       run: docker push registry.digitalocean.com/myqtab/myqtab-keycloak
-
-    - name: Update deployment file
-      run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|myqtab-keycloak|registry.digitalocean.com/myqtab/myqtab-keycloak:'${TAG}'|' $GITHUB_WORKSPACE/deployment.yml
 
     - name: Save DigitalOcean kubeconfig
       run: doctl kubernetes cluster kubeconfig save 01ef7bfd-6265-45b6-b83e-789e09475ce5
