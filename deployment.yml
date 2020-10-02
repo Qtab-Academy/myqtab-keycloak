@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
         - name: keycloak
-          image: jboss/keycloak
+          image: registry.digitalocean.com/myqtab/myqtab-keycloak
+          imagePullPolicy: Always
           env:
             - name: PROXY_ADDRESS_FORWARDING
               value: "true"
